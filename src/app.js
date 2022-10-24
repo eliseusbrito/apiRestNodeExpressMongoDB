@@ -22,4 +22,14 @@ app.post('/livros', (req, res) => {
     res.status(201).send('Livro foi cadastrado com sucesso')
 })
 
+app.put('/livros/:id', (req, res) => {
+    let index = buscaLivro(req.params.id)
+    livros[index].titulo = req.body.titulo
+    res.status(200).json(livros)
+})
+
+function buscaLivro(id) {
+    return livros.findIndex(livro => livro.id == id)
+}
+
 export default app
