@@ -1,20 +1,24 @@
 import express from "express"
+import db from "./config/dbConnect.js"
+import livros from "./models/Livro.js"
+
+db.on("erro", console.log.bind(console, 'Erro de Conexão'))
+db.once("open", () => {
+    console.log('Conexão com o Banco realizada com sucesso')
+})
 
 const app = express()
 
 app.use(express.json())
-
-const livros = [
-    { id: 1, "titulo": "Senhor dos Aneis" },
-    { id: 2, "titulo": "O Hobbit" }
-]
 
 app.get('/', (req, res) => {
     res.status(200).send('Curso de Node')
 })
 
 app.get('/livros', (req, res) => {
-    res.status(200).json(livros)
+    livros.find((err, livros) => {
+        res.status(200).json(livros)
+    })
 })
 
 app.get('/livros/:id', (req, res) => {
@@ -34,9 +38,9 @@ app.put('/livros/:id', (req, res) => {
 })
 
 app.delete('/livros/:id', (req, res) => {
-    let {id} = req.params
+    let { id } = req.params
     let index = buscaLivro(id)
-    livros.splice(index,1)
+    livros.splice(index, 1)
     res.send(`Livro ${id} removido com sucesso`);
 })
 
