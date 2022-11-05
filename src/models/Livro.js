@@ -1,7 +1,6 @@
 import mongoose from "mongoose"
-import mongosse from "mongoose"
 
-const livrosSchema = new mongosse.Schema(
+const livrosSchema = new mongoose.Schema(
     {
         id: { type: String },
         titulo: { type: String, required: true },
@@ -11,6 +10,6 @@ const livrosSchema = new mongosse.Schema(
     }
 )
 
-const livros = mongosse.model('livros', livrosSchema)
+const livros = mongoose.model('livros', livrosSchema)
 
 export default livros
